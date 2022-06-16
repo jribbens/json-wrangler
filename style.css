@@ -1,0 +1,22 @@
+.json { font-family: monospace; }
+.array { padding-left: 2ex; }
+.array.compact { padding-left: 1ex; padding-right: 1ex; }
+.object { padding-left: 2ex; }
+.object.compact { padding-left: 1ex; padding-right: 1ex; }
+.array.folded, .object.folded { display: none; }
+button.fold { background: none; border: none; cursor: pointer; margin-top: -2px; padding: 0 5px; }
+.string a, .property a { color: inherit; text-decoration: none; }
+.string a:hover, .property a:hover { text-decoration: underline; }
+.string { color: #a31515; }
+.number { color: #098658; }
+.null { color: #555555; }
+.boolean { color: #0000ff; }
+.property { color: #0451a5; }
+.punctuation { color: #999999; }
+.dark .string { color: #ce834a; }
+.dark number { color: #b5cea8; }
+.dark .null { color: #aaaaaa; }
+.dark .boolean { color: #569cd6; }
+.dark .property { color: #9cdcfe; }
+.dark .braces { color: #ce70d6; }
+.dark .punctuation { color: #777777; }
