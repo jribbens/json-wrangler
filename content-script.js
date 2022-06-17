@@ -1,5 +1,7 @@
 'use strict'
 
+/* global chrome */
+
 function isCompact (container) {
   const values = Object.values(container)
   if (values.length > 8) return false
@@ -13,21 +15,21 @@ function isCompact (container) {
 function nodeFromString (string, jsonify) {
   if (/^[a-z-]{3,10}:/i.test(string)) {
     try {
-      new URL(string)
+      new URL(string) // eslint-disable-line no-new
       const a = document.createElement('a')
       a.target = '_blank'
       a.href = string
       a.textContent = jsonify ? JSON.stringify(string) : string
       return a
-    } catch (err) {      
+    } catch (err) {
     }
   }
   return document.createTextNode(jsonify ? JSON.stringify(string) : string)
 }
 
-function punctuation(string) {
+function punctuation (string) {
   const span = document.createElement('span')
-  span.classList.add(/[{}\[\]]/.test(string) ? 'braces' : 'punctuation')
+  span.classList.add(/[{}[\]]/.test(string) ? 'braces' : 'punctuation')
   span.textContent = string
   return span
 }
@@ -127,7 +129,7 @@ function handle () {
     const script = document.createElement('script')
     script.src = chrome.runtime.getURL('page-script.js')
     script.addEventListener('load', () => {
-      window.postMessage({ 'jsonData': data }, '*')
+      window.postMessage({ jsonData: data }, '*')
       const div = document.createElement('div')
       div.classList.add('json')
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)')
@@ -140,7 +142,7 @@ function handle () {
         }
       })
       createTree(div, data, '$')
-      document.body.append(div)  
+      document.body.append(div)
     })
     document.head.append(script)
   })
@@ -213,7 +215,7 @@ function handle () {
       target.classList.contains('null')) {
         const value = JSON.parse(target.textContent).toString()
         navigator.clipboard.writeText(value)
-      } 
+      }
     } else if (request.contextMenu === 'copyPath') {
       let target = contextItem
       if (target.tagName === 'A') target = target.parentElement
@@ -228,7 +230,7 @@ function handle () {
       if (!target) return
       navigator.clipboard.writeText(target.title)
     }
-  })  
+  })
   return true
 }
 

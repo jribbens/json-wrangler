@@ -1,5 +1,7 @@
 'use strict'
 
+/* global chrome */
+
 const pending = {}
 const active = {}
 
@@ -7,19 +9,19 @@ chrome.contextMenus.create({
   contexts: ['link', 'page'],
   documentUrlPatterns: [],
   id: 'copyProperty',
-  title: 'Copy property name',
+  title: 'Copy property name'
 })
 chrome.contextMenus.create({
   contexts: ['link', 'page'],
   documentUrlPatterns: [],
   id: 'copyValue',
-  title: 'Copy value',
+  title: 'Copy value'
 })
 chrome.contextMenus.create({
   contexts: ['link', 'page'],
   documentUrlPatterns: [],
   id: 'copyPath',
-  title: 'Copy JSONPath location',
+  title: 'Copy JSONPath location'
 })
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
