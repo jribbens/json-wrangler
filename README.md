@@ -12,6 +12,7 @@ There are no options or configuration, just install the extension and then point
 * You can right-click on an item and the context menu offers options to copy the property name, the value, or the JSONPath to the clipboard.
 * Ctrl-clicking on the arrows, rather than toggling the item you're clicking on instead opens or closes every item immediately contained within this one, which makes it very easy to see a list of the properties of an object, or the members of an array.
 * Ctrl-clicking on an item closes the item that _contains_ that item. This makes it very easy to navigate to an item's container when dealing with large arrays and objects.
+* Properties of objects are sorted by property name.
 * Colour schemes for dark & light mode.
 * You can inspect the data at the JavaScript console by examining the global `json` object.
 
