@@ -19,7 +19,7 @@ function nodeFromString (string) {
       const a = document.createElement('a')
       a.target = '_blank'
       a.href = string
-      a.textContent = jsonify ? JSON.stringify(string) : string
+      a.textContent = JSON.stringify(string)
       return a
     } catch (err) {
     }
