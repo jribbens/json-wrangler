@@ -77,7 +77,7 @@ chrome.webNavigation.onCompleted.addListener(details => {
       target: { tabId: details.tabId },
       files: ['content-script.js']
     }, results => {
-      if (results[0].result) {
+      if (results[0]?.result) {
         active[details.tabId] = details.url
         updateMenus()
       }
@@ -100,7 +100,7 @@ chrome.action.onClicked.addListener(tab => {
     target: { tabId: tab.id },
     files: ['content-script.js']
   }, results => {
-    if (results[0].result) {
+    if (results[0]?.result) {
       active[tab.id] = tab.url
       updateMenus()
     }
