@@ -34,7 +34,14 @@ function punctuation (string) {
   return span
 }
 
-function createTree (parent, value, path) {
+function indent (depth) {
+  const span = document.createElement('span')
+  span.classList.add('indent')
+  span.textContent = '  '.repeat(depth)
+  return span
+}
+
+function createTree (parent, value, path, depth) {
   const type = value === null ? 'null' : typeof value
   if (type === 'string' || type === 'number' || type === 'boolean' || type === 'null') {
     const span = document.createElement('span')
@@ -44,8 +51,11 @@ function createTree (parent, value, path) {
     parent.append(span)
   } else if (Array.isArray(value)) {
     const compact = isCompact(value)
+    const empty = value.length === 0
     parent.append(punctuation('['))
-    if (!compact) {
+    if (compact) {
+      if (!empty) parent.append(' ')
+    } else {
       const fold = document.createElement('button')
       fold.type = 'button'
       fold.classList.add('fold')
@@ -59,19 +69,23 @@ function createTree (parent, value, path) {
     let first = true
     for (let i = 0; i < value.length; i++) {
       if (!first) container.append(punctuation(','), compact ? ' ' : document.createElement('br'))
-      createTree(container, value[i], `${path}[${i}]`)
+      if (!compact) container.append(indent(depth + 1))
+      createTree(container, value[i], `${path}[${i}]`, depth + 1)
       first = false
     }
-    parent.append(container, punctuation(']'))
+    parent.append(container, empty ? '' : compact ? ' ' : indent(depth), punctuation(']'))
   } else if (type === 'object') {
     const compact = isCompact(value)
+    const properties = Object.keys(value)
+    const empty = properties.length === 0
     const container = document.createElement(compact ? 'span' : 'div')
     container.classList.add('value', 'object')
     if (compact) container.classList.add('compact')
     parent.append(punctuation('{'))
-    const properties = Object.keys(value)
     properties.sort()
-    if (!compact) {
+    if (compact) {
+      if (!empty) parent.append(' ')
+    } else {
       const fold = document.createElement('button')
       fold.type = 'button'
       fold.classList.add('fold')
@@ -82,6 +96,7 @@ function createTree (parent, value, path) {
     let first = true
     for (const property of properties) {
       if (!first) container.append(punctuation(','), compact ? ' ' : document.createElement('br'))
+      if (!compact) container.append(indent(depth + 1))
       const subpath = /^[$_\p{ID_Start}][$_\p{ID_Continue}]*$/u.test(property)
         ? `${path}.${property}`
         : `${path}[${JSON.stringify(property)}]`
@@ -91,10 +106,10 @@ function createTree (parent, value, path) {
       span.append(propNode)
       span.title = subpath
       container.append(span, punctuation(': '))
-      createTree(container, value[property], subpath)
+      createTree(container, value[property], subpath, depth + 1)
       first = false
     }
-    parent.append(container, punctuation('}'))
+    parent.append(container, empty ? '' : compact ? ' ' : indent(depth), punctuation('}'))
   }
 }
 
@@ -132,7 +147,7 @@ function handle () {
       window.postMessage({ jsonData: data }, '*')
       const div = document.createElement('div')
       div.classList.add('json')
-      createTree(div, data, '$')
+      createTree(div, data, '$', 0)
       document.body.append(div)
     })
     document.head.append(script)

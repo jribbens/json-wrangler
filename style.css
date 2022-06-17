@@ -1,7 +1,5 @@
-.json { font-family: monospace; }
-.array, .object { padding-left: 2ex; }
-.array.compact, .object.compact { padding-left: 1ex; padding-right: 1ex; }
-.array.folded, .object.folded { display: none; }
+.json { font-family: monospace; white-space: pre-wrap; }
+.array.folded, .object.folded, .folded + .indent { display: none; }
 button.fold {
   background: none;
   border: none;
