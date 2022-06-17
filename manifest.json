@@ -3,14 +3,10 @@
     "default_title": "Click to parse this page as JSON"
   },
   "author": "Jon Ribbens",
-  "background": {
-    "service_worker": "background.js"
-  },
+  "background": { "service_worker": "background.js" },
   "description": "Display JSON files sanely",
   "homepage_url": "https://github.com/jribbens/json-wrangler",
-  "host_permissions": [
-    "*://*/*"
-  ],
+  "host_permissions": [ "<all_urls>" ],
   "icons": {
     "16": "icon-tiny.png",
     "48": "icon-small.png",
@@ -29,8 +25,8 @@
   "version": "1.0",
   "web_accessible_resources": [
     {
-      "resources": ["page-script.js", "style.css"],
-      "matches": ["*://*/*"]
+      "resources": [ "page-script.js", "style.css" ],
+      "matches": [ "<all_urls>" ]
     }
   ]
 }
