@@ -12,8 +12,7 @@ function isCompact (container) {
   return true
 }
 
-function nodeFromString (string, jsonify) {
-  jsonify ||= /^[\s"]|[\s"]$|[\x00-\x1f]/.test(string)
+function nodeFromString (string) {
   if (/^[a-z-]{3,10}:/i.test(string)) {
     try {
       new URL(string) // eslint-disable-line no-new
@@ -25,7 +24,7 @@ function nodeFromString (string, jsonify) {
     } catch (err) {
     }
   }
-  return document.createTextNode(jsonify ? JSON.stringify(string) : string)
+  return document.createTextNode(JSON.stringify(string))
 }
 
 function punctuation (string) {
@@ -40,7 +39,7 @@ function createTree (parent, value, path) {
   if (type === 'string' || type === 'number' || type === 'boolean' || type === 'null') {
     const span = document.createElement('span')
     span.classList.add('value', type)
-    span.append(type === 'string' ? nodeFromString(value, true) : JSON.stringify(value))
+    span.append(type === 'string' ? nodeFromString(value) : JSON.stringify(value))
     span.title = path
     parent.append(span)
   } else if (Array.isArray(value)) {
