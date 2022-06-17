@@ -1,8 +1,6 @@
 .json { font-family: monospace; }
-.array { padding-left: 2ex; }
-.array.compact { padding-left: 1ex; padding-right: 1ex; }
-.object { padding-left: 2ex; }
-.object.compact { padding-left: 1ex; padding-right: 1ex; }
+.array, .object { padding-left: 2ex; }
+.array.compact, .object.compact { padding-left: 1ex; padding-right: 1ex; }
 .array.folded, .object.folded { display: none; }
 button.fold {
   background: none;
@@ -20,10 +18,12 @@ button.fold {
 .boolean { color: #0000ff; }
 .property { color: #0451a5; }
 .punctuation { color: #999999; }
-.dark .string { color: #ce834a; }
-.dark number { color: #b5cea8; }
-.dark .null { color: #aaaaaa; }
-.dark .boolean { color: #569cd6; }
-.dark .property { color: #9cdcfe; }
-.dark .braces { color: #ce70d6; }
-.dark .punctuation { color: #777777; }
+@media (prefers-color-scheme: dark) {
+  .string { color: #ce834a; }
+  .number { color: #b5cea8; }
+  .null { color: #aaaaaa; }
+  .boolean { color: #569cd6; }
+  .property { color: #9cdcfe; }
+  .braces { color: #ce70d6; }
+  .punctuation { color: #777777; }
+}

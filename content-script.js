@@ -132,15 +132,6 @@ function handle () {
       window.postMessage({ jsonData: data }, '*')
       const div = document.createElement('div')
       div.classList.add('json')
-      const darkMode = window.matchMedia('(prefers-color-scheme: dark)')
-      if (darkMode.matches) div.classList.add('dark')
-      darkMode.addEventListener('change', event => {
-        if (event.matches) {
-          div.classList.add('dark')
-        } else {
-          div.classList.remove('dark')
-        }
-      })
       createTree(div, data, '$')
       document.body.append(div)
     })
