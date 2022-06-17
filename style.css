@@ -4,7 +4,14 @@
 .object { padding-left: 2ex; }
 .object.compact { padding-left: 1ex; padding-right: 1ex; }
 .array.folded, .object.folded { display: none; }
-button.fold { background: none; border: none; cursor: pointer; margin-top: -2px; padding: 0 5px; }
+button.fold {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: -2px;
+  padding: 0 5px;
+  user-select: none;
+}
 .string a, .property a { color: inherit; text-decoration: none; }
 .string a:hover, .property a:hover { text-decoration: underline; }
 .string { color: #a31515; }
