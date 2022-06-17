@@ -13,6 +13,7 @@ function isCompact (container) {
 }
 
 function nodeFromString (string, jsonify) {
+  jsonify ||= /^[\s"]|[\s"]$|[\x00-\x1f]/.test(string)
   if (/^[a-z-]{3,10}:/i.test(string)) {
     try {
       new URL(string) // eslint-disable-line no-new
