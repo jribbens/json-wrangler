@@ -41,7 +41,17 @@ function indent (depth) {
   return span
 }
 
-function createTree (parent, value, path, depth) {
+function sleep (timeout) {
+  return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
+let count
+
+async function createTree (parent, value, path, depth) {
+  if (++count > 1000) {
+    count = 0
+    await sleep(1)
+  }
   const type = value === null ? 'null' : typeof value
   if (type === 'string' || type === 'number' || type === 'boolean' || type === 'null') {
     const span = document.createElement('span')
@@ -70,7 +80,7 @@ function createTree (parent, value, path, depth) {
     for (let i = 0; i < value.length; i++) {
       if (!first) container.append(punctuation(','), compact ? ' ' : document.createElement('br'))
       if (!compact) container.append(indent(depth + 1))
-      createTree(container, value[i], `${path}[${i}]`, depth + 1)
+      await createTree(container, value[i], `${path}[${i}]`, depth + 1)
       first = false
     }
     parent.append(container, empty ? '' : compact ? ' ' : indent(depth), punctuation(']'))
@@ -106,7 +116,7 @@ function createTree (parent, value, path, depth) {
       span.append(propNode)
       span.title = subpath
       container.append(span, punctuation(': '))
-      createTree(container, value[property], subpath, depth + 1)
+      await createTree(container, value[property], subpath, depth + 1)
       first = false
     }
     parent.append(container, empty ? '' : compact ? ' ' : indent(depth), punctuation('}'))
@@ -132,15 +142,19 @@ function toggle (target, mouseY, alwaysScroll) {
   }
 }
 
-function handle () {
+async function handle () {
   if (document.body.childNodes.length !== 1) return false
   if (document.body.firstChild.tagName !== 'PRE') return false
   const data = JSON.parse(document.body.firstChild.textContent)
+  document.body.classList.add('loading')
+  await sleep(1)
   const div = document.createElement('div')
   div.classList.add('json')
-  createTree(div, data, '$', 0)
+  count = 0
+  await createTree(div, data, '$', 0)
   document.body.firstChild.remove()
   document.body.append(div)
+  document.body.classList.remove('loading')
   setTimeout(() => window.postMessage({ jsonData: data }, '*'), 500)
   document.body.addEventListener('click', event => {
     const target = event.target
