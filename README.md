@@ -1,6 +1,6 @@
 # json-wrangler Chrome extension
 
-This is a Chrome extension that makes it so JSON files are displayed in a much nicer and more interactive way in the browser. There already exist various extensions to do this, but they all suffered from being old and unmaintained, or buggy, or missing features I consider vital.
+This is a Chrome extension that makes it so JSON files are displayed in a much nicer and more interactive way in the browser. There already existed various extensions to do this, but they all suffered from being old and unmaintained, or buggy, or missing features I consider vital - or all of the above.
 
 There are no options or configuration, just install the extension and then point your browser at a JSON file.
 
@@ -14,9 +14,13 @@ There are no options or configuration, just install the extension and then point
 * Ctrl-clicking on the arrows, rather than toggling the item you're clicking on instead opens or closes every item immediately contained within this one, which makes it very easy to see a list of the properties of an object, or the members of an array.
 * Ctrl-clicking on an item closes the item that _contains_ that item. This makes it very easy to navigate to an item's container when dealing with large arrays and objects.
 * Properties of objects are sorted by property name.
-* Colour schemes for dark & light mode.
+* There are colour schemes for dark & light mode.
 * You can inspect the data at the JavaScript console by examining the global `json` object.
 * Cut'n'pasting from the page should give you valid JSON.
+
+## Notes
+
+* Sometimes it won't trigger when it should; this appears to be due to a [Chrome bug](https://bugs.chromium.org/p/chromium/issues/detail?id=1337294). If this happens, just hit Reload and it should work.
 
 ## Release history
 
