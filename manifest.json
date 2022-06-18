@@ -22,11 +22,5 @@
     "webNavigation",
     "webRequest"
   ],
-  "version": "1.0",
-  "web_accessible_resources": [
-    {
-      "resources": [ "page-script.js", "style.css" ],
-      "matches": [ "<all_urls>" ]
-    }
-  ]
+  "version": "1.0"
 }

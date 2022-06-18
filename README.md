@@ -16,10 +16,7 @@ There are no options or configuration, just install the extension and then point
 * Properties of objects are sorted by property name.
 * Colour schemes for dark & light mode.
 * You can inspect the data at the JavaScript console by examining the global `json` object.
-
-## Notes
-
-* Although in principle it should be able to, it can't process files loaded from `data:` or `file:` URLs. This appears to be due to Chrome bugs relating to "Manifest V3".
+* Cut'n'pasting from the page should give you valid JSON.
 
 ## Release history
 

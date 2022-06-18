@@ -136,23 +136,12 @@ function handle () {
   if (document.body.childNodes.length !== 1) return false
   if (document.body.firstChild.tagName !== 'PRE') return false
   const data = JSON.parse(document.body.firstChild.textContent)
-  const style = document.createElement('link')
-  style.rel = 'stylesheet'
-  style.href = chrome.runtime.getURL('style.css')
+  const div = document.createElement('div')
+  div.classList.add('json')
+  createTree(div, data, '$', 0)
   document.body.firstChild.remove()
-  style.addEventListener('load', () => {
-    const script = document.createElement('script')
-    script.src = chrome.runtime.getURL('page-script.js')
-    script.addEventListener('load', () => {
-      window.postMessage({ jsonData: data }, '*')
-      const div = document.createElement('div')
-      div.classList.add('json')
-      createTree(div, data, '$', 0)
-      document.body.append(div)
-    })
-    document.head.append(script)
-  })
-  document.head.append(style)
+  document.body.append(div)
+  setTimeout(() => window.postMessage({ jsonData: data }, '*'), 500)
   document.body.addEventListener('click', event => {
     const target = event.target
     if (target.tagName === 'BUTTON' && target.classList.contains('fold')) {
