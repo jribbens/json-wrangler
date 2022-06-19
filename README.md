@@ -24,7 +24,13 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
-### 1.0 (xxxx-xx-xx)
+### 1.1 (2022-06-19)
 
-* Initial release.
+* Handle large files more gracefully.
+* Support file: URLs by working around Chrome's `web_accessible_resources` bugginess.
+* Various improvements and fixes.
+
+### 1.0 (2022-06-17)
+
+* Initial version.
 * Tested on Chrome 102.
