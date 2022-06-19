@@ -1,4 +1,4 @@
-.json { font-family: monospace; white-space: pre-wrap; }
+.json { font-family: monospace; white-space: pre-wrap; word-break: break-all; }
 .array.folded, .object.folded, .folded + .indent { display: none; }
 body.loading, body.loading pre { cursor: progress; }
 button.fold {
