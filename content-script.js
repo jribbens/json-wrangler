@@ -205,7 +205,7 @@ async function handle () {
         target = target.previousElementSibling
       }
       if (!target) return
-      navigator.clipboard.writeText(target.textContent)
+      navigator.clipboard.writeText(JSON.parse(target.textContent))
     } else if (request.contextMenu === 'copyValue') {
       let target = contextItem
       if (target.tagName === 'A') target = target.parentElement
