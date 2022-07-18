@@ -9,7 +9,7 @@ There are no options or configuration, just install the extension and then point
 * It should automatically detect JSON files and handle them. If it fails to automatically detect a JSON file (almost certainly because the web server misidentified it) then you can click on the Extensions icon and choose "JSON Wrangler" to manually trigger the extension.
 * If strings (including property names) are valid URLs then they will be made clickable.
 * You can toggle arrays and objects open or closed by clicking on the arrows. When they are toggled closed the number of entries in the array or object are displayed.
-* Hovering over an item shows the JOSNPath to that item as a tooltip.
+* Hovering over an item shows the JOSNPath to that item in the status bar.
 * You can right-click on an item and the context menu offers options to copy the property name, the value, or the JSONPath to the clipboard.
 * Ctrl-clicking on the arrows, rather than toggling the item you're clicking on instead opens or closes every item immediately contained within this one, which makes it very easy to see a list of the properties of an object, or the members of an array.
 * Ctrl-clicking on an item closes the item that _contains_ that item. This makes it very easy to navigate to an item's container when dealing with large arrays and objects.
@@ -23,6 +23,11 @@ There are no options or configuration, just install the extension and then point
 * Sometimes it won't trigger when it should; this appears to be due to a [Chrome bug](https://bugs.chromium.org/p/chromium/issues/detail?id=1337294). If this happens, just hit Reload and it should work.
 
 ## Release history
+
+### 1.2 (2022-07-18)
+
+* Improve JSONPath tooltip and move to bottom of window.
+* Avoid having to store the JSONPath on every element.
 
 ### 1.1 (2022-06-19)
 
