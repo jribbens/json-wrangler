@@ -11,7 +11,7 @@ There are no options or configuration, just install the extension and then point
 * You can toggle arrays and objects open or closed by clicking on the arrows. When they are toggled closed the number of entries in the array or object are displayed.
 * Very small (or empty) arrays and objects are displayed as a 1-line compact representation.
 * Pressing Ctrl-F opens a custom search box to allow you to search the file. It will find results inside folded sections, and when you move to those matches the necessary sections will be unfolded to display them. The search box also supports regular expression searches - just type a JavaScript regular expression (i.e. starting and ending with `/`). Text search is case insensitive, except regular expression searches which are case sensitive unless you append the `i` flag to the expression.
-* Hovering over an item shows the JOSNPath to that item in the status bar.
+* Hovering over an item shows the JSONPath to that item in the status bar.
 * You can right-click on an item and the context menu offers options to copy the property name, the value, or the JSONPath to the clipboard.
 * Ctrl-clicking on the arrows, rather than toggling the item you're clicking on instead opens or closes every item immediately contained within this one, which makes it very easy to see a list of the properties of an object, or the members of an array.
 * Ctrl-clicking on an item closes the item that _contains_ that item. This makes it very easy to navigate to an item's container when dealing with large arrays and objects.
