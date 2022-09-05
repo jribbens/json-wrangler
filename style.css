@@ -1,6 +1,15 @@
-.json { font-family: monospace; white-space: pre-wrap; word-break: break-all; }
-.array.folded, .object.folded, .folded + .indent { display: none; }
-body.loading, body.loading pre { cursor: progress; }
+pre { display: none; }
+body, body pre { cursor: progress; }
+body.loaded, body.loaded pre { cursor: auto; }
+br { user-select: none; }
+.json {
+  font-family: monospace;
+  white-space: pre;
+  position: relative;
+  overflow: hidden;
+}
+.line { position: absolute; }
+.line.match { background-color: #feffb3; }
 button.fold {
   background: none;
   border: none;
@@ -18,10 +27,45 @@ button.fold {
   padding: 3px 10px;
   left: 0;
   bottom: 0;
+  z-index: 1;
 }
-#tooltip.active { display: block; }
-.string a, .property a { color: inherit; text-decoration: none; cursor: pointer; }
-.string a:hover, .property a:hover { text-decoration: underline; }
+#findbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: monospace;
+  background: #dddddd;
+  color: #000000;
+  padding: 3px 10px;
+  z-index: 2;
+}
+#findbox input { font-family: monospace; margin-right: 10px; }
+#findbox .results { margin-left: 10px; }
+#findbox .close { float: right; }
+#findbox button {
+  background-color: inherit;
+  padding: 0;
+  border: none;
+}
+#findbar {
+  position: fixed;
+  top: 17px;
+  bottom: 17px;
+  right: 0;
+  width: 5px;
+  pointer-events: none;
+  z-index: 3;
+}
+#findbar .mark {
+  position: absolute;
+  background-color: yellow;
+  width: 100%;
+}
+#tooltip.active, #findbox.active { display: block; }
+a.string, a.property { text-decoration: none; cursor: pointer; }
+a.string:hover, a.property:hover { text-decoration: underline; }
 .string { color: #a31515; }
 .number { color: #098658; }
 .null { color: #555555; }
@@ -29,7 +73,14 @@ button.fold {
 .property { color: #0451a5; }
 .punctuation { color: #999999; }
 @media (prefers-color-scheme: dark) {
-  #tooltip { background: #333333; color: #ffffff; border-color: #ffffff; }
+  #tooltip, #findbox {
+    background: #333333;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+  #findbox .regexp { color: #84ef42; }
+  #findbox .error { color: #f998b9; }
+  .line.match { background-color: #323300; }
   .string { color: #ce834a; }
   .number { color: #b5cea8; }
   .null { color: #aaaaaa; }

@@ -71,29 +71,35 @@ chrome.webNavigation.onCommitted.addListener(details => {
 })
 
 function execute (tabId, url) {
-  chrome.scripting.insertCSS({
-    files: ['style.css'],
-    target: { tabId }
+  chrome.scripting.executeScript({
+    files: ['page-script.js'],
+    target: { tabId },
+    world: 'MAIN'
   }, () => {
     chrome.scripting.executeScript({
-      files: ['page-script.js'],
       target: { tabId },
-      world: 'MAIN'
-    }, () => {
-      chrome.scripting.executeScript({
-        target: { tabId },
-        files: ['content-script.js']
-      }, results => {
-        if (results && results[0]?.result) {
-          active[tabId] = url
-          updateMenus()
-        }
-      })
+      files: ['content-script.js']
+    }, results => {
+      if (results && results[0]?.result) {
+        active[tabId] = url
+        updateMenus()
+      }
     })
   })
 }
 
+chrome.webNavigation.onCommitted.addListener(details => {
+  if (details.parentFrameId !== -1) return
+  if (pending[details.tabId] || /\.json(#|\?|$)/i.test(details.url)) {
+    chrome.scripting.insertCSS({
+      files: ['style.css'],
+      target: { tabId: details.tabId }
+    })
+  }
+})
+
 chrome.webNavigation.onCompleted.addListener(details => {
+  if (details.parentFrameId !== -1) return
   if (pending[details.tabId] || /\.json(#|\?|$)/i.test(details.url)) {
     delete pending[details.tabId]
     execute(details.tabId, details.url)
@@ -110,4 +116,9 @@ chrome.tabs.onRemoved.addListener(tabId => {
   updateMenus()
 })
 
-chrome.action.onClicked.addListener(tab => execute(tab.id, tab.url))
+chrome.action.onClicked.addListener(tab => {
+  chrome.scripting.insertCSS({
+    files: ['style.css'],
+    target: { tabId: tab.id }
+  }, () => execute(tab.id, tab.url))
+})
