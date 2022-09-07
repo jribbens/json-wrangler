@@ -237,15 +237,9 @@ function createNode (container, value, cls) {
 function updateLines () {
   // create all elements to render lines visible on the screen,
   // and delete all elements outside that range.
-  // we actually go a bit beyond the screen so scrolling up and down looks
-  // better
-  const top = json.getBoundingClientRect().top + window.scrollY
-  const start = Math.floor(
-    (window.scrollY - window.innerHeight - top) / fontHeight
-  )
-  const end = Math.ceil(
-    (window.scrollY - top + window.innerHeight * 2) / fontHeight
-  )
+  const top = -json.getBoundingClientRect().top
+  const start = Math.floor(top / fontHeight)
+  const end = Math.ceil((top + window.innerHeight) / fontHeight)
   destroyLinesExcept(...createLines(rowToLine(start), rowToLine(end)))
 }
 
