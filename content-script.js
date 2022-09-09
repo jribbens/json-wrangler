@@ -117,7 +117,7 @@ function annotateData (value, parent, index, depth, line, last) {
         index,
         length: value.reduce(
           (length, subvalue) => length + JSON.stringify(subvalue).length + 2,
-          length + 3 + (last ? 0 : 1)
+          length + 1 + (last ? 0 : 1)
         ),
         parent
       }
@@ -127,7 +127,7 @@ function annotateData (value, parent, index, depth, line, last) {
         depth,
         index,
         items: value.length,
-        length: length + 3 + value.length.toString().length + (last ? 0 : 1),
+        length: length + 1 + value.length.toString().length + (last ? 0 : 1),
         parent,
         symbol: '['
       }
@@ -297,14 +297,14 @@ function createLines (start, end) {
             if (value.length === 0) {
               createNode(div, '[]', 'braces')
             } else {
-              createNode(div, '[ ', 'braces')
+              createNode(div, '[', 'braces')
               let first = true
               for (const val of value) {
                 if (!first) createNode(div, ', ', 'punctuation')
                 createNode(div, val)
                 first = false
               }
-              createNode(div, ' ]', 'braces')
+              createNode(div, ']', 'braces')
             }
           } else {
             const properties = Object.keys(value)
@@ -312,7 +312,7 @@ function createLines (start, end) {
               createNode(div, '{}', 'braces')
             } else {
               properties.sort()
-              createNode(div, '{ ', 'braces')
+              createNode(div, '{', 'braces')
               let first = true
               for (const property of properties) {
                 const val = value[property]
@@ -322,7 +322,7 @@ function createLines (start, end) {
                 createNode(div, val)
                 first = false
               }
-              createNode(div, ' }', 'braces')
+              createNode(div, '}', 'braces')
             }
           }
         }
