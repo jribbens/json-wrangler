@@ -16,6 +16,7 @@ let fontWidth = 8
 let height
 let width = 80
 
+let cancelSearch
 let executeSearch
 let updateResults
 
@@ -536,6 +537,8 @@ async function handle () {
     const input = document.createElement('input')
     input.type = 'text'
     input.id = 'find'
+    const loader = document.createElement('span')
+    loader.classList.add('loader')
     const resultsNode = document.createElement('span')
     resultsNode.classList.add('results')
     const upArrow = document.createElement('button')
@@ -555,6 +558,7 @@ async function handle () {
       ' ',
       downArrow,
       ' ',
+      loader,
       resultsNode,
       close
     )
@@ -570,9 +574,10 @@ async function handle () {
       executeSearch()
     }
 
-    function closeFindbox () {
+    async function closeFindbox () {
       findbox.classList.remove('active')
       document.body.style.paddingTop = null
+      await cancelSearch()
       updateResults(undefined)
     }
 
@@ -646,8 +651,20 @@ async function handle () {
       })
     }
 
-    executeSearch = move => {
+    let searchStatus
+
+    cancelSearch = async () => {
+      if (searchStatus) {
+        searchStatus = 'cancel'
+        // eslint-disable-next-line no-unmodified-loop-condition
+        while (searchStatus) await new Promise(resolve => setTimeout(resolve, 5))
+      }
+      findbox.classList.remove('searching')
+    }
+
+    executeSearch = async move => {
       if (!findbox.classList.contains('active')) return
+      await cancelSearch()
       let search = input.value
       let regexp
       input.classList.remove('error', 'regexp')
@@ -669,9 +686,20 @@ async function handle () {
       }
       const newResults = []
       search = search.toLowerCase()
-      lines.forEach((line, num) => {
-        if (!line.parent) return
-        if (line.symbol === ']' || line.symbol === '}') return
+      searchStatus = 'search'
+      findbox.classList.add('searching')
+      for (let num = 0; num < lines.length; num++) {
+        if (!(num % 1000)) {
+          if (searchStatus === 'cancel') {
+            searchStatus = undefined
+            findbox.classList.remove('searching')
+            return
+          }
+          await new Promise(resolve => setTimeout(resolve, 1))
+        }
+        const line = lines[num]
+        if (!line?.parent) continue
+        if (line.symbol === ']' || line.symbol === '}') continue
         let value = line.symbol ? line.index : line.parent[line.index]
         if (typeof value === 'object') value = JSON.stringify(value)
         const property = !line.symbol && typeof line.index === 'string'
@@ -687,7 +715,9 @@ async function handle () {
             newResults.push(num)
           }
         }
-      })
+      }
+      searchStatus = undefined
+      findbox.classList.remove('searching')
       updateResults(newResults, move)
       if (move && results?.length) showResult(current)
     }
