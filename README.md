@@ -26,6 +26,11 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
+### 1.4 (2022-09-10)
+
+* Make the search asynchronous and interruptible so you don't get stuck waiting for results for a partially-typed search.
+* Minor bug fixes and improvements.
+
 ### 1.3 (2022-09-05)
 
 * Major rewrite to dynamically create only the HTML elements required to display the part of the JSON file that is currently visible on the screen. This makes things much faster for medium-sized files, and makes it actually possible to display large files.
