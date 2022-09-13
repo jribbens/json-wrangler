@@ -689,7 +689,7 @@ async function handle () {
       searchStatus = 'search'
       findbox.classList.add('searching')
       for (let num = 0; num < lines.length; num++) {
-        if (!(num % 1000)) {
+        if (!(num % 10000)) {
           if (searchStatus === 'cancel') {
             searchStatus = undefined
             findbox.classList.remove('searching')
