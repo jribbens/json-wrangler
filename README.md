@@ -26,6 +26,11 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
+### 1.4.1 (2022-09-13)
+
+* Improve speed of search.
+* First public release.
+
 ### 1.4 (2022-09-10)
 
 * Make the search asynchronous and interruptible so you don't get stuck waiting for results for a partially-typed search.
