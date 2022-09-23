@@ -813,10 +813,25 @@ async function handle () {
     } else if (request.contextMenu === 'copyValue') {
       let target = contextItem
       while (target && !target.classList.contains('value')) {
-        if (target.textContent === ', ') return
-        target = target.nextElementSibling
+        if (target.classList.contains('braces') ||
+           (target.classList.contains('punctuation') &&
+             target.textContent[0] === ',')) {
+          target = undefined
+        } else {
+          target = target.nextElementSibling
+        }
       }
-      if (!target) return
+      if (!target) {
+        target = contextItem.parentElement
+        if (target?.classList.contains('line')) {
+          const line = lines[parseInt(target.dataset.line, 10)]
+          const value = line.parent && line.parent[line.index]
+          if (value !== undefined) {
+            navigator.clipboard.writeText(JSON.stringify(value, null, 2))
+          }
+        }
+        return
+      }
       if (target.classList.contains('string') ||
           target.classList.contains('number') ||
           target.classList.contains('boolean') ||
