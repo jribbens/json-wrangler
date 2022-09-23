@@ -282,13 +282,13 @@ function createLines (start, end) {
           fold.dataset.length = line.items
           fold.classList.add('fold')
           if (folds[row]) {
-            fold.textContent = '⯈' + line.items
+            fold.textContent = '+' + line.items
             fold.classList.add('folded')
             div.append(fold)
             createNode(div, line.symbol === '[' ? ']' : '}', 'braces')
             if (lines[folds[row][0]].comma) createNode(div, ',', 'punctuation')
           } else {
-            fold.textContent = '⯆'
+            fold.textContent = '-'
             div.append(fold)
           }
         } else {
