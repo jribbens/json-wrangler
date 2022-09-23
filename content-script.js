@@ -738,7 +738,8 @@ async function handle () {
         closeFindbox()
         return
       }
-      if (event.ctrlKey && (event.key === 'F' || event.key === 'f')) {
+      if ((event.ctrlKey || event.metaKey) &&
+          (event.key === 'F' || event.key === 'f')) {
         event.preventDefault()
         openFindbox()
       }
