@@ -48,7 +48,7 @@ button.fold {
 #findbox input { font-family: monospace; margin-right: 10px; }
 #findbox .results { margin-left: 10px; }
 #findbox.searching .results { display: none; }
-#findbox .close { float: right; }
+#findbox .close { float: right; font-size: 1.1em; }
 #findbox button {
   background-color: inherit;
   padding: 0;

@@ -530,7 +530,7 @@ async function handle () {
     close.classList.add('close')
     close.ariaLabel = 'Close'
     close.type = 'button'
-    close.textContent = '✖'
+    close.textContent = '×'
     const label = document.createElement('label')
     label.for = 'find'
     label.append('Search:')
@@ -544,11 +544,11 @@ async function handle () {
     const upArrow = document.createElement('button')
     upArrow.ariaLabel = 'Previous match'
     upArrow.type = 'button'
-    upArrow.textContent = '⮝'
+    upArrow.textContent = '▲'
     const downArrow = document.createElement('button')
     downArrow.ariaLabel = 'Next match'
     downArrow.type = 'button'
-    downArrow.textContent = '⮟'
+    downArrow.textContent = '▼'
     findbox.append(
       label,
       ' ',
