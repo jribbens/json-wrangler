@@ -464,7 +464,7 @@ async function handle () {
     const target = event.target
     if (target.tagName === 'BUTTON' && target.classList.contains('fold')) {
       event.preventDefault()
-      if (event.ctrlKey) {
+      if (event.ctrlKey || event.metaKey) {
         let folded
         const targetRow = parseInt(target.parentElement.dataset.line, 10)
         const depth = lines[targetRow].depth
@@ -489,8 +489,8 @@ async function handle () {
           if (button) button.focus()
         }
       }
-    } else if (event.ctrlKey && (target.tagName !== 'BUTTON' ||
-        !target.classList.contains('fold'))) {
+    } else if ((event.ctrlKey || event.metaKey) &&
+        (target.tagName !== 'BUTTON' || !target.classList.contains('fold'))) {
       let element = target
       while (element && !element.classList.contains('line')) {
         element = element.parentElement
