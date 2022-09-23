@@ -768,9 +768,9 @@ async function handle () {
 
   document.body.append(makeFindbox())
 
-  const tooltip = document.createElement('span')
+  const tooltip = document.createElement('div')
   tooltip.id = 'tooltip'
-  json.append(tooltip)
+  document.body.append(tooltip)
   let tooltipNode
   let tooltipValue
 

@@ -23,6 +23,7 @@ button.fold {
   position: fixed;
   background: #dddddd;
   color: #000000;
+  font-family: monospace;
   border-top-right-radius: 5px;
   padding: 3px 10px;
   left: 0;
@@ -30,6 +31,7 @@ button.fold {
   z-index: 1;
   white-space: pre-wrap;
   word-break: break-all;
+  overflow: hidden;
 }
 #findbox {
   display: none;
