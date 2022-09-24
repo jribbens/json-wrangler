@@ -5,23 +5,25 @@
 const active = {}
 const pending = {}
 
-chrome.contextMenus.create({
-  contexts: ['link', 'page'],
-  documentUrlPatterns: [],
-  id: 'copyProperty',
-  title: 'Copy property name'
-})
-chrome.contextMenus.create({
-  contexts: ['link', 'page'],
-  documentUrlPatterns: [],
-  id: 'copyValue',
-  title: 'Copy value'
-})
-chrome.contextMenus.create({
-  contexts: ['link', 'page'],
-  documentUrlPatterns: [],
-  id: 'copyPath',
-  title: 'Copy JSONPath location'
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    contexts: ['link', 'page'],
+    documentUrlPatterns: [],
+    id: 'copyProperty',
+    title: 'Copy property name'
+  })
+  chrome.contextMenus.create({
+    contexts: ['link', 'page'],
+    documentUrlPatterns: [],
+    id: 'copyValue',
+    title: 'Copy value'
+  })
+  chrome.contextMenus.create({
+    contexts: ['link', 'page'],
+    documentUrlPatterns: [],
+    id: 'copyPath',
+    title: 'Copy JSONPath location'
+  })  
 })
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
