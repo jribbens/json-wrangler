@@ -65,7 +65,7 @@ button.fold {
 }
 #findbar .mark {
   position: absolute;
-  background-color: yellow;
+  background-color: #ccb800;
   width: 100%;
 }
 #tooltip.active, #findbox.active { display: block; }
@@ -88,6 +88,7 @@ a.string:hover, a.property:hover { text-decoration: underline; }
   #findbox .regexp { color: #84ef42; }
   #findbox .error { color: #f998b9; }
   #findbox .loader { color: #ffffff; }
+  #findbar .mark { background-color: yellow; }
   .line.match { background-color: #323300; }
   .string { color: #ce834a; }
   .number { color: #b5cea8; }
