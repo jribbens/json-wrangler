@@ -20,13 +20,16 @@ let cancelSearch
 let executeSearch
 let updateResults
 
-function isCompact (container) {
+function isCompact (container, prefix) {
   const values = Object.values(container)
   if (values.length > 8) return false
   for (const value of values) {
     if (value !== null && typeof value === 'object') return false
   }
-  if (JSON.stringify(container, null, 2).length > 60) return false
+  if (JSON.stringify(container, null, 2).length + (prefix ?? 0) >
+      (width * 2 / 3)) {
+    return false
+  }
   return true
 }
 
@@ -107,7 +110,7 @@ function annotateData (value, parent, index, depth, line, last) {
     return line + rows(lines[line].length)
   }
   // it's an array or an object
-  const compact = isCompact(value)
+  const compact = isCompact(value, length + 3)
   value[LINE] = line
   if (Array.isArray(value)) {
     if (compact) {
