@@ -210,7 +210,7 @@ function annotateData (value, parent, index, depth, line, last) {
 function createNode (container, value, cls) {
   let link
   if ((cls === 'property' || (typeof value === 'string' && !cls)) &&
-      /^[a-z-]{3,10}:/i.test(value)) {
+      value.length <= 4096 && /^[a-z-]{3,10}:[^\x00-!]*$/i.test(value)) {
     try {
       new URL(value) // eslint-disable-line no-new
       link = true
