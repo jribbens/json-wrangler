@@ -480,45 +480,31 @@ async function handle () {
   })
   json.addEventListener('click', event => {
     const target = event.target
-    if (target.tagName === 'BUTTON' && target.classList.contains('fold')) {
-      event.preventDefault()
-      if (event.ctrlKey || event.metaKey) {
-        let folded
-        const targetRow = parseInt(target.parentElement.dataset.line, 10)
-        const depth = lines[targetRow].depth
-        for (let row = targetRow + 1; row < lines.length; row++) {
-          const line = lines[row]
-          if (!line || line.depth > depth + 1) continue
-          if (line.depth <= depth) break
-          if (line.symbol === '[' || line.symbol === '{') {
-            if (folded === undefined) folded = folds[row] === undefined
-            setFold(row, folded)
-          }
-        }
-        json.style.height = `${fontHeight * lineToRow(height)}px`
-        destroyLinesExcept(0, targetRow)
-        updateLines()
-        updateResults(results)
-      } else {
-        const line = parseInt(target.parentElement.dataset.line, 10)
-        toggle(line, event.clientY)
-        if (lines[line].node) {
-          const button = lines[line].node.querySelector('button.fold')
-          if (button) button.focus()
+    if (target.tagName !== 'BUTTON' || !target.classList.contains('fold')) return
+    event.preventDefault()
+    if (event.ctrlKey || event.metaKey) {
+      let folded
+      const targetRow = parseInt(target.parentElement.dataset.line, 10)
+      const depth = lines[targetRow].depth
+      for (let row = targetRow + 1; row < lines.length; row++) {
+        const line = lines[row]
+        if (!line || line.depth > depth + 1) continue
+        if (line.depth <= depth) break
+        if (line.symbol === '[' || line.symbol === '{') {
+          if (folded === undefined) folded = folds[row] === undefined
+          setFold(row, folded)
         }
       }
-    } else if ((event.ctrlKey || event.metaKey) &&
-        (target.tagName !== 'BUTTON' || !target.classList.contains('fold'))) {
-      let element = target
-      while (element && !element.classList.contains('line')) {
-        element = element.parentElement
-      }
-      if (element) {
-        toggle(
-          lines[parseInt(element.dataset.line, 10)].parent[LINE],
-          event.clientY,
-          true
-        )
+      json.style.height = `${fontHeight * lineToRow(height)}px`
+      destroyLinesExcept(0, targetRow)
+      updateLines()
+      updateResults(results)
+    } else {
+      const line = parseInt(target.parentElement.dataset.line, 10)
+      toggle(line, event.clientY)
+      if (lines[line].node) {
+        const button = lines[line].node.querySelector('button.fold')
+        if (button) button.focus()
       }
     }
   })
@@ -532,14 +518,28 @@ async function handle () {
     }
   }, true)
   json.addEventListener('mouseup', event => {
-    if (event.ctrlKey || event.metaKey) return
     const target = event.target
-    if (target.tagName !== 'A') return
     const diffX = event.clientX - downX
     const diffY = event.clientY - downY
     if (downNode !== target || diffX * diffX + diffY * diffY >= 25) return
-    event.preventDefault()
-    window.open(JSON.parse(target.textContent), '_blank')
+    if (event.ctrlKey || event.metaKey) {
+      if (target.tagName === 'BUTTON' && target.classList.contains('fold')) return
+      let element = target
+      while (element && !element.classList.contains('line')) {
+        element = element.parentElement
+      }
+      if (element) {
+        event.preventDefault()
+        toggle(
+          lines[parseInt(element.dataset.line, 10)].parent[LINE],
+          event.clientY,
+          true
+        )
+      }
+    } else if (target.tagName === 'A') {
+      event.preventDefault()
+      window.open(JSON.parse(target.textContent), '_blank')
+    }
   }, true)
 
   function makeFindbox () {
