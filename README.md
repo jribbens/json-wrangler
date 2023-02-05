@@ -26,6 +26,10 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
+### 1.4.3 (2023-02-xx)
+
+* Handle broken JSON files better (don't end up with an empty page).
+
 ### 1.4.2 (2022-09-24)
 
 * MacOS improvements: avoid arrow characters that are not available in the MacOS font, and allow the Command key instead of the Ctrl key.

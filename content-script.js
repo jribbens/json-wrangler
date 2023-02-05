@@ -418,8 +418,23 @@ function getFontWidth () {
 
 async function handle () {
   if (document.body.childNodes.length !== 1) return false
-  if (document.body.firstChild.tagName !== 'PRE') return false
-  const data = JSON.parse(document.body.firstChild.textContent)
+  if (document.body.firstElementChild.tagName !== 'PRE') return false
+  let data
+  try {
+    data = JSON.parse(document.body.firstElementChild.textContent)
+  } catch (err) {
+    document.body.firstElementChild.style.display = 'revert'
+    const errorbox = document.createElement('div')
+    errorbox.id = 'findbox'
+    errorbox.classList.add('active')
+    const error = document.createElement('div')
+    error.classList.add('error')
+    error.append(`Bad JSON: ${err}`)
+    errorbox.append(error)
+    document.body.insertBefore(errorbox, document.body.firstElementChild)
+    document.body.style.paddingTop = `${errorbox.clientHeight}px`
+    return false
+  }
   getFontWidth()
   json = document.createElement('div')
   json.classList.add('json')
