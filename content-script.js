@@ -658,6 +658,7 @@ async function handle () {
     }
 
     function showResult (num) {
+      if (!results.length) return
       current = num + 1
       resultsNode.textContent = `${current} / ${results.length}`
       window.scrollTo({
