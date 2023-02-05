@@ -529,6 +529,7 @@ async function handle () {
     }
   }, true)
   json.addEventListener('mouseup', event => {
+    if (event.ctrlKey || event.metaKey) return
     const target = event.target
     if (target.tagName !== 'A') return
     const diffX = event.clientX - downX
