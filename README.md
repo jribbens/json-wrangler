@@ -26,10 +26,11 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
-### 1.4.3 (2023-02-xx)
+### 1.4.3 (2023-02-06)
 
 * Handle broken JSON files better (don't end up with an empty page).
 * Make searching inside compact objects work better.
+* Various minor UI improvements.
 
 ### 1.4.2 (2022-09-24)
 
