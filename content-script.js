@@ -436,6 +436,7 @@ async function handle () {
     errorbox.append(error)
     document.body.insertBefore(errorbox, document.body.firstElementChild)
     document.body.style.paddingTop = `${errorbox.clientHeight}px`
+    document.body.classList.add('loaded')
     return false
   }
   getFontWidth()
