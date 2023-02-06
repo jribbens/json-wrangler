@@ -29,6 +29,7 @@ There are no options or configuration, just install the extension and then point
 ### 1.4.3 (2023-02-xx)
 
 * Handle broken JSON files better (don't end up with an empty page).
+* Make searching inside compact objects work better.
 
 ### 1.4.2 (2022-09-24)
 

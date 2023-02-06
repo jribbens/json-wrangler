@@ -708,6 +708,11 @@ async function handle () {
       search = search.toLowerCase()
       searchStatus = 'search'
       findbox.classList.add('searching')
+      function test (value) {
+        if (value === undefined) return false
+        if (regexp) return regexp.test(value)
+        return String(value).toLowerCase().indexOf(search) >= 0
+      }
       for (let num = 0; num < lines.length; num++) {
         if (!(num % 10000)) {
           if (searchStatus === 'cancel') {
@@ -720,20 +725,23 @@ async function handle () {
         const line = lines[num]
         if (!line?.parent) continue
         if (line.symbol === ']' || line.symbol === '}') continue
-        let value = line.symbol ? line.index : line.parent[line.index]
-        if (typeof value === 'object') value = JSON.stringify(value)
         const property = !line.symbol && typeof line.index === 'string'
           ? line.index
-          : ''
-        if (regexp) {
-          if (regexp.test(value) || (property && regexp.test(property))) {
-            newResults.push(num)
+          : undefined
+        if (test(property)) {
+          newResults.push(num)
+          continue
+        }
+        let value = line.symbol ? line.index : line.parent[line.index]
+        if (value !== null && typeof value === 'object') {
+          for (const sub in value) {
+            if ((typeof sub === 'string' && test(sub)) || test(value[sub])) {
+              newResults.push(num)
+              break
+            }
           }
         } else {
-          if (String(value).toLowerCase().indexOf(search) >= 0 ||
-              (property && property.toLowerCase().indexOf(search) >= 0)) {
-            newResults.push(num)
-          }
+          if (test(value)) newResults.push(num)
         }
       }
       searchStatus = undefined
