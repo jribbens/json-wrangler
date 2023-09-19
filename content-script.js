@@ -420,8 +420,10 @@ function getFontWidth () {
 }
 
 async function handle () {
-  if (document.body.childNodes.length !== 1) return false
-  if (document.body.firstElementChild.tagName !== 'PRE') return false
+  const pageStructure = Array.from(document.body.children)
+    .map(element => element.tagName).join(',')
+  if (pageStructure !== 'DIV,PRE' && pageStructure !== 'PRE') return false
+  if (pageStructure !== 'PRE') document.body.firstChild.remove()
   let data
   try {
     data = JSON.parse(document.body.firstElementChild.textContent)
