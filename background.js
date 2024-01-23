@@ -85,6 +85,11 @@ function execute (tabId, url) {
       if (results && results[0]?.result) {
         active[tabId] = url
         updateMenus()
+      } else {
+        chrome.scripting.removeCSS({
+          files: ['style.css'],
+          target: { tabId: tabId }
+        })    
       }
     })
   })
