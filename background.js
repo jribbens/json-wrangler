@@ -5,30 +5,26 @@
 const active = {}
 const pending = {}
 
-chrome.runtime.onInstalled.addListener(() => {
+function addMenus () {
   chrome.contextMenus.create({
     contexts: ['link', 'page'],
     documentUrlPatterns: [],
     id: 'copyProperty',
     title: 'Copy property name'
-  })
+  }, () => chrome.runtime.lastError)
   chrome.contextMenus.create({
     contexts: ['link', 'page'],
     documentUrlPatterns: [],
     id: 'copyValue',
     title: 'Copy value'
-  })
+  }, () => chrome.runtime.lastError)
   chrome.contextMenus.create({
     contexts: ['link', 'page'],
     documentUrlPatterns: [],
     id: 'copyPath',
     title: 'Copy JSONPath location'
-  })  
-})
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  chrome.tabs.sendMessage(tab.id, { contextMenu: info.menuItemId })
-})
+  }, () => chrome.runtime.lastError)
+}
 
 function updateMenus () {
   const urls = Object.values(active)
@@ -37,6 +33,12 @@ function updateMenus () {
   chrome.contextMenus.update('copyValue', { documentUrlPatterns: urls, visible })
   chrome.contextMenus.update('copyPath', { documentUrlPatterns: urls, visible })
 }
+
+chrome.runtime.onInstalled.addListener(addMenus)
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  chrome.tabs.sendMessage(tab.id, { contextMenu: info.menuItemId })
+})
 
 chrome.webRequest.onHeadersReceived.addListener(
   details => {
