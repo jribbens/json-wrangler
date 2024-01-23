@@ -1,6 +1,6 @@
-pre { display: none; }
-body, body pre { cursor: progress; }
-body.loaded, body.loaded pre { cursor: auto; }
+body > pre { display: none; }
+body, body > pre { cursor: progress; }
+body.loaded, body.loaded > pre { cursor: auto; }
 br { user-select: none; }
 .json {
   font-family: monospace;

@@ -420,15 +420,15 @@ function getFontWidth () {
 }
 
 async function handle () {
-  const pageStructure = Array.from(document.body.children)
-    .map(element => element.tagName).join(',')
-  if (pageStructure !== 'DIV,PRE' && pageStructure !== 'PRE') return false
-  if (pageStructure !== 'PRE') document.body.firstChild.remove()
+  let text = document.querySelector('body > pre')?.textContent
+  if (!/^[ \t\r\n]*(\{|\[|"|'|[-0-9]|true|false|null)/.test(text)) return false
   let data
   try {
-    data = JSON.parse(document.body.firstElementChild.textContent)
+    data = JSON.parse(text)
+    text = undefined
   } catch (err) {
-    document.body.firstElementChild.style.display = 'revert'
+    text = undefined
+    document.querySelector('body > pre').style.display = 'revert'
     const errorbox = document.createElement('div')
     errorbox.id = 'findbox'
     errorbox.classList.add('active')
@@ -439,7 +439,7 @@ async function handle () {
     document.body.insertBefore(errorbox, document.body.firstElementChild)
     document.body.style.paddingTop = `${errorbox.clientHeight}px`
     document.body.classList.add('loaded')
-    return false
+    return true
   }
   getFontWidth()
   json = document.createElement('div')
