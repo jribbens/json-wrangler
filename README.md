@@ -26,6 +26,11 @@ There are no options or configuration, just install the extension and then point
 
 ## Release history
 
+### 1.4.4 (2024-01-23)
+
+* Improve robustness in the face of Chrome changes and other extensions.
+* Tested on Chrome 120.
+
 ### 1.4.3 (2023-02-06)
 
 * Handle broken JSON files better (don't end up with an empty page).
